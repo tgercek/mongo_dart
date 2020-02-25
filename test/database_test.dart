@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart' as crypto;
 import 'dart:async';
 import 'package:test/test.dart';
 import 'package:uuid/uuid.dart';
+import 'package:pedantic/pedantic.dart';
 
 const dbName = "test-mongo-dart";
 
@@ -1191,6 +1192,13 @@ Future testDbOpenWhileStateIsOpening() {
       expect(db.state == State.OPENING, isTrue);
     });
   });
+}
+
+Future testDbCloseWhileStateIsOpening() async {
+  Db db = Db(DefaultUri);
+  unawaited(db.open());
+  await db.close();
+  expect(db.state == State.CLOSED, isTrue);
 }
 
 testInvalidIndexCreationErrorHandling() {
