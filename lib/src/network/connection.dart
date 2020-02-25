@@ -88,7 +88,7 @@ class _Connection {
 
   Future close() {
     _closed = true;
-    return socket.close();
+    return socket?.close();
   }
 
   _sendBuffer() {
