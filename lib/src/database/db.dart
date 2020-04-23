@@ -210,7 +210,9 @@ class Db {
 
   Future open(
       {WriteConcern writeConcern: WriteConcern.ACKNOWLEDGED,
-      bool secure = false}) {
+      bool secure = false,
+      SecurityContext securityContext,
+      bool ignoreBadCertificate = false}) {
     return new Future.sync(() {
       if (state == State.OPENING) {
         throw MongoDartError('Attempt to open db in state $state');
@@ -221,7 +223,13 @@ class Db {
       _connectionManager = _ConnectionManager(this);
 
       _uriList.forEach((uri) {
-        _connectionManager.addConnection(_parseUri(uri)..isSecure = secure);
+        final connection = _parseUri(uri);
+        connection.isSecure = secure;
+        connection..ignoreBadCertificate = ignoreBadCertificate;
+        if (securityContext != null) {
+          connection.securityContext = securityContext;
+        }
+        _connectionManager.addConnection(connection);
       });
 
       return _connectionManager.open(writeConcern);
