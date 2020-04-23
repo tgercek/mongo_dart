@@ -16,6 +16,34 @@ Server-side driver library for MongoDb implemented in pure Dart.
   await db.open();
 ```
 
+### Obtaining a secure connection
+
+```dart
+
+  Db db = new Db("mongodb://localhost:27017/mongo_dart-blog");
+  await db.open(secure: true);
+```
+
+### Obtaining a secure connection with custom certificate
+
+```dart
+
+  Db db = new Db("mongodb://localhost:27017/mongo_dart-blog");
+  List bytes = File('rds-combined-ca-bundle.pem').readAsBytesSync();
+  final securityContext = SecurityContext()..useCertificateChainBytes(bytes);
+  await db.open(secure: secure, securityContext: securityContext);
+```
+
+### Obtaining a secure connection with custom certificate and ignoring invalid certificates
+
+```dart
+
+  Db db = new Db("mongodb://localhost:27017/mongo_dart-blog");
+  List bytes = File('rds-combined-ca-bundle.pem').readAsBytesSync();
+  final securityContext = SecurityContext()..useCertificateChainBytes(bytes);
+  await db.open(secure: secure, securityContext: securityContext, ignoreBadCertificate: true);
+```
+
 ### Querying
 
 
