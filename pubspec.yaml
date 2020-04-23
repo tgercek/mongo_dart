@@ -8,6 +8,7 @@ authors:
   - Joel Trottier-Hebert <iamquebecois@gmail.com>
   - Tobe O <thosakwe@gmail.com>
   - Alexey Danilevsky <alexey.danilevsky@gmail.com>
+  - Sebastian Kutschbach
 description: MongoDB driver for Dart
 homepage: https://github.com/mongo-dart/mongo_dart
 environment:
